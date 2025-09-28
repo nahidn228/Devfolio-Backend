@@ -1,6 +1,7 @@
 import compression from "compression";
 import cors from "cors";
 import express from "express";
+import { UserRouter } from "./module/user/user.route";
 
 
 const app = express();
@@ -18,10 +19,13 @@ app.use(
 );
 
 
+app.use('/api/v1/user', UserRouter)
+
+
 
 // Default route for testing
 app.get("/", (_req, res) => {
-  res.send("API is running");
+  res.send("Devfolio API is running");
 });
 
 // 404 Handler
