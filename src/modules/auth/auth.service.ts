@@ -77,9 +77,44 @@ const resetPassword = async ({
 
   return user;
 };
+const forgetPassword = async ({
+  email,
+  password,
+  phone,
+}: {
+  email: string;
+  password: string;
+  phone: string;
+}) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError(status.NOT_FOUND, "User not found!", "");
+  }
+
+  if (phone !== user.phone) {
+    throw new AppError(status.BAD_REQUEST, "Something went Wrong!", "");
+  }
+
+  const updatePassword = await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      password
+    },
+  });
+
+  return user;
+};
 
 export const AuthService = {
   loginWithEmailAndPassword,
   authWithGoogle,
   resetPassword,
+  forgetPassword
 };

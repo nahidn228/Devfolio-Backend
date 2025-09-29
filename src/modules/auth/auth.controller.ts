@@ -41,6 +41,25 @@ const resetPassword = async (req: Request, res: Response) => {
     });
   }
 };
+const forgetPassword = async (req: Request, res: Response) => {
+  try {
+    const result = await AuthService.forgetPassword(req.body);
+
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Password Updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    sendResponse(res, {
+      statusCode: status.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: "Something went Wrong!",
+      data: error,
+    });
+  }
+};
 
 const authWithGoogle = async (req: Request, res: Response) => {
   try {
@@ -65,4 +84,5 @@ export const AuthController = {
   loginWithEmailAndPassword,
   authWithGoogle,
   resetPassword,
+  forgetPassword
 };

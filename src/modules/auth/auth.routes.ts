@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/login", AuthController.loginWithEmailAndPassword);
 router.post("/reset", AuthController.resetPassword);
+router.post("/forget", AuthController.forgetPassword);
 router.post("/google", AuthController.authWithGoogle);
 
 export const authRouter = router;
