@@ -6,7 +6,7 @@ import status from "http-status";
 const loginWithEmailAndPassword = async (req: Request, res: Response) => {
   try {
     const result = await AuthService.loginWithEmailAndPassword(req.body);
-    res.status(200).json(result);
+
     sendResponse(res, {
       statusCode: status.OK,
       success: true,
