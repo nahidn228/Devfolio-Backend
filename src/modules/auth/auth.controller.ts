@@ -22,6 +22,25 @@ const loginWithEmailAndPassword = async (req: Request, res: Response) => {
     });
   }
 };
+const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const result = await AuthService.resetPassword(req.body);
+
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Password Reset successfully",
+      data: result,
+    });
+  } catch (error) {
+    sendResponse(res, {
+      statusCode: status.INTERNAL_SERVER_ERROR,
+      success: false,
+      message: "Failed to Reset Password",
+      data: error,
+    });
+  }
+};
 
 const authWithGoogle = async (req: Request, res: Response) => {
   try {
@@ -45,4 +64,5 @@ const authWithGoogle = async (req: Request, res: Response) => {
 export const AuthController = {
   loginWithEmailAndPassword,
   authWithGoogle,
+  resetPassword,
 };

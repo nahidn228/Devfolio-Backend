@@ -43,7 +43,43 @@ const authWithGoogle = async (data: Prisma.UserCreateInput) => {
   return user;
 };
 
+const resetPassword = async ({
+  email,
+  password,
+  newPassword,
+}: {
+  email: string;
+  password: string;
+  newPassword: string;
+}) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError(status.NOT_FOUND, "User not found!", "");
+  }
+
+  if (password !== user.password) {
+    throw new AppError(status.BAD_REQUEST, "Password is incorrect!", "");
+  }
+
+  const updatePassword = await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      password: newPassword,
+    },
+  });
+
+  return user;
+};
+
 export const AuthService = {
   loginWithEmailAndPassword,
   authWithGoogle,
+  resetPassword,
 };
