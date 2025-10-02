@@ -77,6 +77,7 @@ const resetPassword = async ({
 
   return user;
 };
+
 const forgetPassword = async ({
   email,
   password,
@@ -116,5 +117,6 @@ export const AuthService = {
   loginWithEmailAndPassword,
   authWithGoogle,
   resetPassword,
-  forgetPassword
+  forgetPassword,
+
 };

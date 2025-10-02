@@ -15,7 +15,11 @@ app.use(express.json()); // Parse incoming JSON requests
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",              
+      "https://devfolio-puce-six.vercel.app",     
+         
+    ],
     credentials: true,
   })
 );

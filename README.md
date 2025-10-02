@@ -1,101 +1,89 @@
+# Next-DevFolio Backend
 
-# Next Blog Starter
+## Overview
 
-A simple **Blog Application Starter Pack** built with **TypeScript, Express.js**.  
-This project is designed for the **Next Level Web Development Bootcamp** to help learners practice Prisma hands-on by building a blog platform.
+This is the **backend API** for the Next-DevFolio personal portfolio project.  
+It provides secure endpoints for managing blogs, projects, and user authentication.  
+The backend is built with **Node.js, Express, Prisma/MongoDB**, and uses **JWT authentication** for protected routes.
 
 ---
 
 ## Features
-- TypeScript + Express.js setup
-- Modular project structure
-- Environment configuration with `dotenv`
-- Ready to extend with blog modules (Posts, Users, etc.)
+
+### Authentication & Authorization
+- JWT-based authentication
+- Passwords hashed securely using `bcrypt`
+- Owner-only access to private routes (dashboard, blog/project management)
+- Seeded admin user for initial login
+
+### Blog Management
+- Create, Read, Update, Delete (CRUD) blogs
+- Public users can fetch all blogs and view individual blog pages
+- Supports featured blogs and tags
+- Optional pagination for fetching blogs
+
+### Project Management
+- CRUD operations for portfolio projects
+- Project details include title, description, tech stack, features, thumbnail, live/repo URLs
+- Supports featured projects
+
+### API Security
+- Protected routes for owner-only operations
+- Proper input validation
+- Error handling with descriptive messages
 
 ---
 
-## Installation
+## Tech Stack
 
-Clone the repository:
-
-```bash
-git clone https://github.com/Apollo-Level2-Web-Dev/next-blog-starter.git
-cd next-blog-starter
-```
-
-Install dependencies:
-
-```bash
-# using npm
-npm install
-
-# using yarn
-yarn install
-
-# using pnpm
-pnpm install
-```
-
-Setup environment variables:
-
-```bash
-cp .env.example .env
-```
-
-Run the development server:
-
-```bash
-# using npm
-npm run dev
-
-# using yarn
-yarn dev
-
-# using pnpm
-pnpm dev
-```
+- **Node.js** – Backend runtime  
+- **Express.js** – REST API framework  
+- **Prisma** (with PostgreSQL) or **Mongoose** (with MongoDB) – Database ORM/ODM  
+- **JWT** – Authentication  
+- **bcrypt** – Password hashing  
+- **CORS** – Cross-Origin requests handling  
+- **dotenv** – Environment variable management  
 
 ---
 
-## Folder Structure
+## API Endpoints
 
-```
-Prisma-Blog/
-│── node_modules/          # Dependencies
-│── src/
-│   ├── app.ts             # Express app configuration
-│   ├── server.ts          # Server entry point
-│   ├── config/            # Environment & configuration files
-│   └── modules/           # Application modules (posts, users, etc.)
-│── package.json           # Project metadata & scripts
-│── pnpm-lock.yaml         # Lockfile (pnpm)
-│── tsconfig.json          # TypeScript configuration
-│── README.md              # Documentation
-```
+### Authentication
 
----
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| POST | `/api/auth/login` | Login with email and password |
+| POST | `/api/auth/register` | Register a new user (owner/admin only) |
 
-## Scripts
+### Blogs
 
-```bash
-# Run in development mode
-pnpm dev
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| GET | `/api/v1/posts` | Fetch all blogs (public) |
+| GET | `/api/v1/posts/:id` | Fetch a single blog |
+| POST | `/api/v1/posts` | Create a blog (owner only) |
+| PUT | `/api/v1/posts/:id` | Update a blog (owner only) |
+| DELETE | `/api/v1/posts/:id` | Delete a blog (owner only) |
 
-# Build for production
-pnpm build
+### Projects
 
-# Run production build
-pnpm start
-```
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| GET | `/api/v1/projects` | Fetch all projects |
+| GET | `/api/v1/projects/:id` | Fetch a single project |
+| POST | `/api/v1/projects` | Create a project (owner only) |
+| PUT | `/api/v1/projects/:id` | Update a project (owner only) |
+| DELETE | `/api/v1/projects/:id` | Delete a project (owner only) |
 
 ---
 
-## Learning Objective
+## Environment Variables
 
-This starter pack is part of the **Next Level Web Development Bootcamp** curriculum.
-By using this project, students will learn how to:
+Create a `.env` file at the root with the following variables:
 
-* Connect a Node.js app with Prisma ORM
-* Build modular APIs
-* Manage environment variables
-* Structure scalable backend projects
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/portfolio
+JWT_SECRET=your_secret_key
+NEXT_PUBLIC_BASE_API=http://localhost:5000/api/v1
+PORT=5000
+```

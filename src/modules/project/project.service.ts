@@ -53,7 +53,13 @@ const getAllProjects = async ({
     take: limit,
     where,
     include: {
-      author: true,
+      author: {
+        select: {
+          name: true,
+          email: true,
+          picture: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
